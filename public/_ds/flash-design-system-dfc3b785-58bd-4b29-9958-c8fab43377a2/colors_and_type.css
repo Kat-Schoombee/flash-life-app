@@ -1,0 +1,486 @@
+/* =============================================================
+   Flash Design System — Core Tokens
+   Primary typography, color, spacing, and elevation primitives.
+   Sourced from the "Flash Design System.fig" file (canonical).
+   ============================================================= */
+
+/* ----------------------- Fonts -----------------------
+   Satoshi — primary brand typeface. A single variable TTF
+   (Satoshi-Variable.ttf, weights 300–900) is preferred when
+   available; the static per-weight OTFs below are kept as a
+   fallback for older renderers. */
+
+@font-face {
+  font-family: "Satoshi";
+  font-style: normal;
+  font-weight: 300 900;
+  src: url("fonts/Satoshi-Variable.ttf") format("truetype-variations"),
+       url("fonts/Satoshi-Variable.ttf") format("truetype");
+  font-display: swap;
+}
+/* Explicit alias for cases where a designer wants the variable
+   file by name rather than by family. */
+@font-face {
+  font-family: "Satoshi Variable";
+  font-style: normal;
+  font-weight: 300 900;
+  src: url("fonts/Satoshi-Variable.ttf") format("truetype-variations"),
+       url("fonts/Satoshi-Variable.ttf") format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Satoshi";
+  font-style: normal;
+  font-weight: 300;
+  src: url("fonts/Satoshi-Light.otf") format("opentype");
+  font-display: swap;
+}
+@font-face {
+  font-family: "Satoshi";
+  font-style: italic;
+  font-weight: 300;
+  src: url("fonts/Satoshi-LightItalic.otf") format("opentype");
+  font-display: swap;
+}
+@font-face {
+  font-family: "Satoshi";
+  font-style: normal;
+  font-weight: 400;
+  src: url("fonts/Satoshi-Regular.otf") format("opentype");
+  font-display: swap;
+}
+@font-face {
+  font-family: "Satoshi";
+  font-style: italic;
+  font-weight: 400;
+  src: url("fonts/Satoshi-Italic.otf") format("opentype");
+  font-display: swap;
+}
+@font-face {
+  font-family: "Satoshi";
+  font-style: normal;
+  font-weight: 500;
+  src: url("fonts/Satoshi-Medium.otf") format("opentype");
+  font-display: swap;
+}
+@font-face {
+  font-family: "Satoshi";
+  font-style: italic;
+  font-weight: 500;
+  src: url("fonts/Satoshi-MediumItalic.otf") format("opentype");
+  font-display: swap;
+}
+@font-face {
+  font-family: "Satoshi";
+  font-style: normal;
+  font-weight: 700;
+  src: url("fonts/Satoshi-Bold.otf") format("opentype");
+  font-display: swap;
+}
+@font-face {
+  font-family: "Satoshi";
+  font-style: italic;
+  font-weight: 700;
+  src: url("fonts/Satoshi-BoldItalic.otf") format("opentype");
+  font-display: swap;
+}
+@font-face {
+  font-family: "Satoshi";
+  font-style: normal;
+  font-weight: 900;
+  src: url("fonts/Satoshi-Black.otf") format("opentype");
+  font-display: swap;
+}
+@font-face {
+  font-family: "Satoshi";
+  font-style: italic;
+  font-weight: 900;
+  src: url("fonts/Satoshi-BlackItalic.otf") format("opentype");
+  font-display: swap;
+}
+
+/* Display typeface: Kilimanjaro Sans — the brand display face.
+   DISPLAY ONLY: short, loud, uppercase marketing headlines. Never
+   body copy, never UI labels. Single weight (400) — do not fake
+   bold or italic (font-synthesis: none). Self-hosted OTF. */
+@font-face {
+  font-family: "Kilimanjaro";
+  font-style: normal;
+  font-weight: 400;
+  src: url("fonts/Kilimanjaro.otf") format("opentype");
+  font-display: swap;
+}
+
+/* Monospace — Roboto Mono as a safe default (Figma used Roboto). */
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500;700&display=swap");
+
+:root {
+  /* =========================================================
+     PRIMITIVES — Colour
+     Direct hex values from the Figma "Primitives variables"
+     page. Do not reference these directly in components —
+     prefer the semantic tokens further below.
+     ========================================================= */
+
+  /* Base */
+  --flash-white: #FFFFFF;
+  --flash-black: #000000;
+
+  /* Grey (neutral) — full 16-step scale */
+  --flash-grey-50:  #F8F8F8;
+  --flash-grey-100: #F0F0F0;
+  --flash-grey-150: #EDEDED;
+  --flash-grey-200: #E6E6E6;
+  --flash-grey-300: #DDDDDD;
+  --flash-grey-400: #C1C1C1;
+  --flash-grey-500: #A4A4A4;
+  --flash-grey-600: #7C7C7C;
+  --flash-grey-700: #646464; /* body secondary */
+  --flash-grey-800: #414141; /* body primary on white */
+  --flash-grey-850: #333338; /* dark canvas / sections */
+  --flash-grey-900: #252525;
+  --flash-grey-950: #1A1A1A;
+
+  /* Grey-green — subtle UI tint */
+  --flash-grey-green-50:  #EBF0EF;
+  --flash-grey-green-100: #D6DEDC;
+  --flash-grey-green-500: #3C5237; /* hero dark tones */
+
+  /* Grey-blue — copy accents (links/notes) */
+  --flash-grey-blue-700: #193154;
+
+  /* Green — Flash brand hue (the electric "spark")
+     The brand is built on FOUR named greens. Flash Green is the
+     spark; everything else carries it. */
+  --flash-green:        #1DFA0F; /* FLASH GREEN — the spark. Fills, CTAs, active, brand moments. */
+  --flash-green-mid:    #10C504; /* MID GREEN — accent on light surfaces. Flash Green lacks contrast on white. */
+  --flash-green-medium: #3FB549; /* MEDIUM GREEN — softer/supporting green, hover tints. */
+  --flash-green-forest: #003F1E; /* FOREST GREEN — dark surfaces, dark canvas. */
+
+  /* Coherent tint/shade scale built around the spark.
+     400 = Flash Green (spark) · 500 = Mid Green · 900 = Forest. */
+  --flash-green-50:  #ECFEEA;
+  --flash-green-100: #CFFDC9;
+  --flash-green-200: #9CFB92;
+  --flash-green-300: #5FF950;
+  --flash-green-400: #1DFA0F; /* = Flash Green (spark) */
+  --flash-green-500: #10C504; /* = Mid Green (light-surface accent) */
+  --flash-green-600: #0CA203;
+  --flash-green-700: #097A02;
+  --flash-green-800: #045A22;
+  --flash-green-900: #003F1E; /* = Forest Green */
+
+  /* Dark green — dark-mode hero backgrounds (forest family) */
+  --flash-dark-green-500: #003F1E;
+  --flash-dark-green-700: #003016;
+  --flash-dark-green-900: #00200E;
+
+  /* Yellow-green — lotto / supporting */
+  --flash-yellow-green-500: #97E128;
+  --flash-yellow-green-700: #7ABF10;
+
+  /* Blue */
+  --flash-blue-300: #34B6EC;   /* Flash cyan */
+  --flash-blue-500: #0995D6;   /* primary info */
+  --flash-blue-600: #0A87C6;
+  --flash-blue-700: #086198;
+
+  /* Pale blue */
+  --flash-pale-blue-100: #E3F2FB;
+  --flash-pale-blue-300: #9FD7F2;
+
+  /* Orange (1Voucher partner) */
+  --flash-orange-500: #FF5F00;
+  --flash-orange-200: #FFDFCC;
+
+  /* Yellow */
+  --flash-yellow-500: #E6DC29;
+  --flash-yellow-700: #E8D601;
+  --flash-yellow-800: #D3DF02;
+
+  /* Red / critical */
+  --flash-red-500: #D80027; /* support critical */
+  --flash-red-600: #C10021;
+  --flash-red-700: #A00019;
+
+  /* Semantic support palette (alerts) */
+  --flash-support-success: #19A70D;
+  --flash-support-warning: #FAA225;
+  --flash-support-warning-strong: #FF9900;
+  --flash-support-info: #0995D6;
+  --flash-support-critical: #D80027;
+
+  /* Purple — design-system annotation only (dashed outlines in Figma).
+     NEVER use in product UI. */
+  --flash-annotation-purple: #9747FF;
+
+  /* =========================================================
+     SEMANTIC — Colour (Usage > Role > Hierarchy > State > Contrast)
+     This is the Figma naming convention. Prefer these tokens.
+     ========================================================= */
+
+  /* Surfaces */
+  --color-surface-canvas:      var(--flash-white);
+  --color-surface-raised:      var(--flash-white);
+  --color-surface-subtle:      var(--flash-grey-50);
+  --color-surface-muted:       var(--flash-grey-100);
+  --color-surface-inverse:     var(--flash-grey-850);
+  --color-surface-brand:       var(--flash-green);        /* spark green panel — a brand moment; pair with black fg */
+  --color-surface-brand-dark:  var(--flash-dark-green-500);
+  --color-surface-accent:      var(--flash-green);        /* spark accent fill (CTA chip / highlight) */
+
+  /* Foreground (text + icon) */
+  --color-fg-primary:          var(--flash-black);
+  --color-fg-secondary:        var(--flash-grey-700);   /* 64-64-64 */
+  --color-fg-tertiary:         var(--flash-grey-600);
+  --color-fg-disabled:         var(--flash-grey-400);
+  --color-fg-inverse:          var(--flash-white);
+  --color-fg-brand:            var(--flash-green-mid);    /* Mid green — brand text/icon on light (Flash Green fails contrast on white) */
+  --color-fg-on-brand:         var(--flash-white);        /* text on green/brand surfaces — ALWAYS bright white, never grey or reduced opacity */
+  --color-fg-link:             var(--flash-grey-blue-700);
+
+  /* Borders */
+  --color-border-subtle:       var(--flash-grey-green-50);
+  --color-border-default:      var(--flash-grey-300);
+  --color-border-strong:       var(--flash-black);
+  --color-border-focus:        var(--flash-green-mid);
+
+  /* Status */
+  --color-status-success-bg:   #E6F6E5;
+  --color-status-success-fg:   var(--flash-support-success);
+  --color-status-warning-bg:   #FFF1DC;
+  --color-status-warning-fg:   var(--flash-support-warning);
+  --color-status-critical-bg: #FCE5EA;
+  --color-status-critical-fg: var(--flash-support-critical);
+  --color-status-info-bg:      #E3F2FB;
+  --color-status-info-fg:      var(--flash-support-info);
+
+  /* Button — primary (the default CTA). Black fill / white text on light
+     surfaces; INVERTS to white fill / black text on dark surfaces. */
+  --color-btn-primary-bg:      var(--flash-black);
+  --color-btn-primary-fg:      var(--flash-white);
+  --color-btn-primary-bg-hover: var(--flash-grey-900);
+  --color-btn-primary-bg-pressed: var(--flash-grey-950);
+  --color-btn-primary-bg-disabled: var(--flash-grey-300);
+
+  /* Button — accent (spark green, black text). USED VERY RARELY — green is
+     NOT a call-to-action colour. The default CTA is the primary button
+     (black on light, white on dark). Reserve this for exceptional brand
+     moments only, never as a routine button. */
+  --color-btn-accent-bg:       var(--flash-green);
+  --color-btn-accent-fg:       var(--flash-black);
+  --color-btn-accent-bg-hover: var(--flash-green-mid);
+
+  /* Button — secondary (white fill, black border/text) */
+  --color-btn-secondary-bg:    var(--flash-white);
+  --color-btn-secondary-fg:    var(--flash-black);
+  --color-btn-secondary-border: var(--flash-black);
+
+  /* Button — tertiary / ghost */
+  --color-btn-tertiary-bg:     transparent;
+  --color-btn-tertiary-fg:     var(--flash-black);
+  --color-btn-tertiary-bg-hover: var(--flash-grey-100);
+
+  /* =========================================================
+     TYPE — Primitives
+     ========================================================= */
+  --font-family-primary: "Satoshi", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  /* Display — Kilimanjaro Sans. DISPLAY ONLY: short uppercase headlines.
+     Single weight; set font-synthesis:none so it is never faux-bolded. */
+  --font-family-display: "Kilimanjaro", var(--font-family-primary);
+  /* Legacy alias — "secondary" now resolves to the display face. */
+  --font-family-secondary: var(--font-family-display);
+  --font-family-mono: "Roboto Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 650;
+  --font-weight-bold: 800;
+  --font-weight-black: 900;
+
+  /* Size scale — mirrors font-size-150 … font-size-1200 from Figma */
+  --font-size-150:  12px;
+  --font-size-200:  13px;
+  --font-size-225:  14px;
+  --font-size-250:  16px;  /* body */
+  --font-size-300:  18px;
+  --font-size-350:  20px;
+  --font-size-400:  22px;
+  --font-size-450:  24px;
+  --font-size-500:  26px;
+  --font-size-550:  30px;
+  --font-size-600:  35px;
+  --font-size-650:  38px;
+  --font-size-700:  40px;
+  --font-size-750:  42px;
+  --font-size-800:  46px;
+  --font-size-850:  48px;
+  --font-size-900:  50px;
+  --font-size-950:  54px;
+  --font-size-1000: 55px;
+  --font-size-1050: 58px;
+  --font-size-1100: 62px;
+  --font-size-1150: 76px;
+  --font-size-1200: 80px;
+
+  --line-height-tight: 1;
+  --line-height-snug: 1.1;
+  --line-height-normal: 1.25;
+  --line-height-relaxed: 1.5;
+
+  /* =========================================================
+     TYPE — Semantic (Flash text styles)
+     ========================================================= */
+  /* Headings desktop */
+  --text-heading-3xl-size: 55px;
+  --text-heading-2xl-size: 42px;
+  --text-heading-xl-size:  30px;
+  --text-heading-l-size:   26px;
+  --text-heading-m-size:   22px;
+  --text-heading-s-size:   20px;
+
+  /* Headings mobile */
+  --text-heading-mobile-3xl-size: 48px;
+  --text-heading-mobile-2xl-size: 35px;
+  --text-heading-mobile-xl-size:  30px;
+  --text-heading-mobile-l-size:   24px;
+  --text-heading-mobile-m-size:   22px;
+  --text-heading-mobile-s-size:   18px;
+
+  /* Body */
+  --text-body-m-size:   16px;
+  --text-body-s-size:   13px;
+  --text-body-xs-size:  12px;
+  --text-body-xxs-size: 11px;
+
+  /* Labels / input */
+  --text-input-label-size: 14px;
+
+  /* =========================================================
+     NUMBER (Radius + Spacing)
+     ========================================================= */
+  --space-1:   1px;  /* 0.125x */
+  --space-2:   2px;  /* 0.25x  */
+  --space-4:   4px;  /* 0.5x   */
+  --space-6:   6px;  /* 0.75x  */
+  --space-8:   8px;  /* 1x     */
+  --space-10:  10px; /* 1.25x  */
+  --space-12:  12px; /* 1.5x   */
+  --space-16:  16px; /* 2x     */
+  --space-20:  20px; /* 2.5x   */
+  --space-24:  24px; /* 3x     */
+  --space-32:  32px; /* 4x     */
+  --space-40:  40px; /* 5x     */
+  --space-48:  48px; /* 6x     */
+  --space-64:  64px; /* 8x     */
+  --space-80:  80px; /* 10x    */
+
+  /* Corner radius */
+  --radius-xs:  4px;
+  --radius-sm:  8px;
+  --radius-md:  12px;
+  --radius-lg:  20px;
+  --radius-xl:  32px;
+  --radius-2xl: 40px;
+  --radius-card: 30px; /* signature — cards & containers use a generous 30px radius */
+  --radius-pill: 999px;
+
+  /* =========================================================
+     ELEVATION / Shadows
+     Three-step system — cards typically use shadow-1.
+     ========================================================= */
+  --shadow-1: 0 1px 2px rgba(17, 24, 39, 0.04), 0 2px 8px rgba(17, 24, 39, 0.06);
+  --shadow-2: 0 4px 8px rgba(17, 24, 39, 0.06), 0 8px 24px rgba(17, 24, 39, 0.08);
+  --shadow-3: 0 8px 16px rgba(17, 24, 39, 0.08), 0 24px 48px rgba(17, 24, 39, 0.12);
+
+  /* Inner shadow for pressed / inset states */
+  --shadow-inset: inset 0 1px 2px rgba(0, 0, 0, 0.08);
+}
+
+/* =============================================================
+   Base element styles — drop these in as a light reset on pages
+   that want the Flash type feel without hand-wiring each tag.
+   ============================================================= */
+
+body {
+  font-family: var(--font-family-primary);
+  font-size: var(--text-body-m-size);
+  line-height: var(--line-height-normal);
+  color: var(--color-fg-primary);
+  background: var(--color-surface-canvas);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, .h1 {
+  font-family: var(--font-family-primary);
+  font-weight: var(--font-weight-bold);
+  font-size: var(--text-heading-3xl-size);
+  line-height: var(--line-height-snug);
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+h2, .h2 {
+  font-weight: var(--font-weight-bold);
+  font-size: var(--text-heading-2xl-size);
+  line-height: var(--line-height-snug);
+  letter-spacing: -0.015em;
+  margin: 0;
+}
+h3, .h3 {
+  font-weight: var(--font-weight-bold);
+  font-size: var(--text-heading-xl-size);
+  line-height: var(--line-height-snug);
+  margin: 0;
+}
+h4, .h4 {
+  font-weight: var(--font-weight-bold);
+  font-size: var(--text-heading-l-size);
+  line-height: var(--line-height-normal);
+  margin: 0;
+}
+h5, .h5 {
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--text-heading-m-size);
+  line-height: var(--line-height-normal);
+  margin: 0;
+}
+h6, .h6 {
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--text-heading-s-size);
+  line-height: var(--line-height-normal);
+  margin: 0;
+}
+p, .body {
+  font-size: var(--text-body-m-size);
+  line-height: var(--line-height-relaxed);
+  color: var(--color-fg-primary);
+  margin: 0;
+  text-wrap: pretty;
+}
+.caption {
+  font-size: var(--text-body-s-size);
+  line-height: var(--line-height-normal);
+  color: var(--color-fg-secondary);
+}
+.eyebrow {
+  font-size: var(--text-body-xs-size);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-fg-secondary);
+}
+code, .mono {
+  font-family: var(--font-family-mono);
+  font-size: 0.92em;
+  background: var(--color-surface-muted);
+  padding: 0.08em 0.35em;
+  border-radius: var(--radius-xs);
+}
+a {
+  color: var(--color-fg-link);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-thickness: 1px;
+}
+a:hover { color: var(--flash-green-mid); }
