@@ -916,6 +916,24 @@ class FlashApp extends React.Component {
     return [{ keys: r1 }, { keys: r2 }, { keys: r3 }, bottom('123')];
   }
 
+  // Category icon assets are colour-baked SVGs (e.g. cat-transact.svg is already red).
+  // A CSS filter (grayscale/opacity) can only desaturate each icon's OWN colour, so every
+  // "not earned" icon ends up a slightly different, inconsistent shade of grey. Using the
+  // icon as a CSS mask instead paints a flat, exact #A4A4A4 through its silhouette on an
+  // #F0F0F0 tile — identical across every category regardless of its earned colour.
+  renderCatIcon(iconSrc, size, active) {
+    if (!iconSrc) return null;
+    if (active) return React.createElement('img', { src: iconSrc, alt: '', style: { width: size, height: size } });
+    const maskStyle = {
+      width: size, height: size, backgroundColor: '#A4A4A4',
+      WebkitMaskImage: `url(${iconSrc})`, maskImage: `url(${iconSrc})`,
+      WebkitMaskSize: 'contain', maskSize: 'contain',
+      WebkitMaskRepeat: 'no-repeat', maskRepeat: 'no-repeat',
+      WebkitMaskPosition: 'center', maskPosition: 'center',
+    };
+    return React.createElement('div', { style: maskStyle });
+  }
+
   renderVals() {
     const s = this.state;
     const done = s.done;
@@ -1046,14 +1064,12 @@ class FlashApp extends React.Component {
       const yearlyDone = !!s.yearlyDone[c.id];
       return {
         id:c.id, name:c.name, pts:c.pts, iconSrc:c.iconSrc,
-        iconEl: c.iconSrc ? React.createElement('img', { src:c.iconSrc, alt:'', style:{ width:24, height:24, filter: yearlyDone ? 'none' : 'grayscale(1) opacity(.5)' } }) : null,
+        iconEl: this.renderCatIcon(c.iconSrc, 24, yearlyDone),
         iconTint: yearlyDone ? c.tint : '#F0F0F0',
         done: !!done[c.id], yearlyDone,
         statusLabel: yearlyDone ? 'Category earned' : 'Not earned yet',
         statusColor: yearlyDone ? '#10C504' : '#A4A4A4',
         cardBg: '#fff',
-        tickBg: yearlyDone ? '#10C504' : '#F0F0F0',
-        tickCol: yearlyDone ? '#FFFFFF' : '#B4B4B4',
         open: () => this.openCategory(c.id),
       };
     });
@@ -1513,7 +1529,7 @@ class FlashApp extends React.Component {
       catYearlyDone: !!s.yearlyDone[catDef.id],
       catName: catDef.name, catBlurb: catDef.blurb, catPtsLabel: '+' + catDef.pts + ' points',
       catIconSrc: catDef.iconSrc,
-      catIconEl: catDef.iconSrc ? React.createElement('img', { src:catDef.iconSrc, alt:'', style:{ width:26, height:26, filter: s.yearlyDone[catDef.id] ? 'none' : 'grayscale(1) opacity(.5)' } }) : null,
+      catIconEl: this.renderCatIcon(catDef.iconSrc, 26, s.yearlyDone[catDef.id]),
       catTint: s.yearlyDone[catDef.id] ? catDef.tint : '#F0F0F0',
       catPtsShort: catDef.pts + ' Points',
       catPtsPillBg: s.done[catDef.id] ? 'rgba(16,197,4,0.12)' : '#F0F0F0',

@@ -43,21 +43,22 @@ export function Club({ v }) {
               </div>
             ))}
           </div>
-        </div>
-      </div>
 
-      <div onClick={v.goEarnPoints} style={css`background:#fff;border-radius:20px;padding:18px;box-shadow:0 1px 3px rgba(0,0,0,.05);margin-bottom:22px;cursor:pointer;`}>
-        <div style={css`display:flex;justify-content:space-between;align-items:center;`}>
-          <span style={css`font-size:18px;font-weight:900;`}>Yearly Category Progress</span>
-          <div style={css`display:flex;align-items:center;gap:8px;flex:none;`}>
-            <span style={css`font-size:15px;font-weight:900;color:${v.yearlyCatColor};`}>{v.yearlyCatLabel}</span>
-            <svg width="18" height="18" style={css`color:#5F6261;flex:none;`}><use href="#ic-chev" /></svg>
+          <div style={css`height:1px;background:#EDEDED;margin:16px 0;`}></div>
+          <div onClick={v.goEarnPoints} style={css`cursor:pointer;`}>
+            <div style={css`display:flex;justify-content:space-between;align-items:center;`}>
+              <span style={css`font-size:18px;font-weight:900;`}>Yearly Category Progress</span>
+              <div style={css`display:flex;align-items:center;gap:8px;flex:none;`}>
+                <span style={css`font-size:15px;font-weight:900;color:${v.yearlyCatColor};`}>{v.yearlyCatLabel}</span>
+                <svg width="18" height="18" style={css`color:#5F6261;flex:none;`}><use href="#ic-chev" /></svg>
+              </div>
+            </div>
+            <div style={css`display:flex;justify-content:space-between;gap:6px;margin-top:16px;`}>
+              {v.yearlyCatIcons.map((c, i) => (
+                <div key={i} style={css`width:36px;height:36px;border-radius:11px;background:${c.iconTint};display:flex;align-items:center;justify-content:center;flex:none;`}>{c.iconEl}</div>
+              ))}
+            </div>
           </div>
-        </div>
-        <div style={css`display:flex;justify-content:space-between;gap:6px;margin-top:16px;`}>
-          {v.yearlyCatIcons.map((c, i) => (
-            <div key={i} style={css`width:36px;height:36px;border-radius:11px;background:${c.iconTint};display:flex;align-items:center;justify-content:center;flex:none;`}>{c.iconEl}</div>
-          ))}
         </div>
       </div>
 
@@ -72,7 +73,7 @@ export function Club({ v }) {
           <div key={i} onClick={c.open} style={css`background:${c.cardBg};border-radius:18px;padding:15px;cursor:pointer;box-shadow:0 1px 3px rgba(0,0,0,.06);`}>
             <div style={css`display:flex;justify-content:space-between;align-items:flex-start;`}>
               <div style={css`width:42px;height:42px;border-radius:13px;background:${c.iconTint};display:flex;align-items:center;justify-content:center;`}>{c.iconEl}</div>
-              <div style={css`width:24px;height:24px;border-radius:50%;background:${c.tickBg};flex:none;display:flex;align-items:center;justify-content:center;`}><svg width="13" height="13" style={css`color:${c.tickCol};`}><use href="#ic-check" /></svg></div>
+              <img src={c.yearlyDone ? 'assets/tick-earned.svg' : 'assets/tick-muted.svg'} alt="" style={css`width:24px;height:24px;flex:none;`} />
             </div>
             <div style={css`font-size:15px;font-weight:800;margin-top:12px;line-height:1.15;text-wrap:balance;`}>{c.name}</div>
             <div style={css`margin-top:4px;`}>
@@ -88,7 +89,7 @@ export function Club({ v }) {
           <div key={i} onClick={c.open} style={css`background:${c.cardBg};border-radius:18px;padding:15px;cursor:pointer;box-shadow:0 1px 3px rgba(0,0,0,.06);`}>
             <div style={css`display:flex;justify-content:space-between;align-items:flex-start;`}>
               <div style={css`width:42px;height:42px;border-radius:13px;background:${c.iconTint};display:flex;align-items:center;justify-content:center;`}>{c.iconEl}</div>
-              <div style={css`width:24px;height:24px;border-radius:50%;background:${c.tickBg};flex:none;display:flex;align-items:center;justify-content:center;`}><svg width="13" height="13" style={css`color:${c.tickCol};`}><use href="#ic-check" /></svg></div>
+              <img src={c.yearlyDone ? 'assets/tick-earned.svg' : 'assets/tick-muted.svg'} alt="" style={css`width:24px;height:24px;flex:none;`} />
             </div>
             <div style={css`font-size:15px;font-weight:800;margin-top:12px;line-height:1.15;text-wrap:balance;`}>{c.name}</div>
             <div style={css`margin-top:4px;`}>
