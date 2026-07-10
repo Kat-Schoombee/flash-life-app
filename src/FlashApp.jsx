@@ -1065,6 +1065,7 @@ class FlashApp extends React.Component {
       return {
         id:c.id, name:c.name, pts:c.pts, iconSrc:c.iconSrc,
         iconEl: this.renderCatIcon(c.iconSrc, 24, yearlyDone),
+        iconElSmall: this.renderCatIcon(c.iconSrc, 14, yearlyDone),
         iconTint: yearlyDone ? c.tint : '#F0F0F0',
         done: !!done[c.id], yearlyDone,
         statusLabel: yearlyDone ? 'Category earned' : 'Not earned yet',
@@ -1076,10 +1077,12 @@ class FlashApp extends React.Component {
 
     const cats10 = cats.filter(c => c.pts === 10);
     const cats5 = cats.filter(c => c.pts === 5);
-    // Yearly Category Progress card — count + colour threshold (0–4 red, 5–7 orange, 8/8 green)
+    // Yearly Category Progress card — count + colour threshold (0–4 red, 5–7 orange, 8/8 green).
+    // Pill is a tinted chip: light rgba background with a matching solid-colour label.
     const yearlyCatCount = cats.filter(c => c.yearlyDone).length;
     const yearlyCatLabel = yearlyCatCount + '/' + cats.length;
-    const yearlyCatColor = yearlyCatCount >= 8 ? '#10C504' : (yearlyCatCount >= 5 ? '#FAA225' : '#D80027');
+    const yearlyCatBg = yearlyCatCount >= 8 ? 'rgba(16,197,4,0.12)' : (yearlyCatCount >= 5 ? 'rgba(255,149,0,0.12)' : 'rgba(243,48,81,0.12)');
+    const yearlyCatText = yearlyCatCount >= 8 ? '#0C8B43' : (yearlyCatCount >= 5 ? '#B4690C' : '#C41F3D');
     const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
     const curMonth = 6; // July — the live/current month
     const BREAK = 9;    // October — cycle break, no cow
@@ -1520,7 +1523,7 @@ class FlashApp extends React.Component {
       // club
       cats10, cats5, herd, yearCows,
       earnPointsSub: toGo > 0 ? ('You are ' + toGo + (toGo === 1 ? ' point' : ' points') + ' away from earning July’s cow') : 'You’ve earned July’s cow! 🎉',
-      yearlyCatIcons: cats, yearlyCatLabel, yearlyCatColor,
+      yearlyCatIcons: cats, yearlyCatLabel, yearlyCatBg, yearlyCatText,
       goEarnPoints: () => this.setState({ clubTab:'earn' }),
       // category
       // catYearlyDone: has this category EVER been earned this yearly cycle (sticky —
