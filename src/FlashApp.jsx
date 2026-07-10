@@ -1066,6 +1066,7 @@ class FlashApp extends React.Component {
         id:c.id, name:c.name, pts:c.pts, iconSrc:c.iconSrc,
         iconEl: this.renderCatIcon(c.iconSrc, 24, yearlyDone),
         iconElSmall: this.renderCatIcon(c.iconSrc, 14, yearlyDone),
+        iconElBig: this.renderCatIcon(c.iconSrc, 28, yearlyDone),
         iconTint: yearlyDone ? c.tint : '#F0F0F0',
         done: !!done[c.id], yearlyDone,
         statusLabel: yearlyDone ? 'Category earned' : 'Not earned yet',

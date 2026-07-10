@@ -26,7 +26,7 @@ export function Club({ v }) {
         </div>
 
         <div style={css`background:#fff;border-radius:20px;padding:18px;box-shadow:0 1px 3px rgba(0,0,0,.05);margin-bottom:22px;`}>
-          <div style={css`font-size:18px;font-weight:900;margin-bottom:14px;`}>Yearly progress</div>
+          <div style={css`font-size:15px;font-weight:900;margin-bottom:14px;`}>Categories earned</div>
           <div style={css`display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;`}>
             <span style={css`font-size:13px;font-weight:800;`}>Your herd this year</span>
             <span style={css`font-size:11px;font-weight:800;color:#0C8B43;background:rgba(16,197,4,0.12);border-radius:999px;padding:3px 9px;flex:none;`}>{v.yearCowsLabel}</span>
@@ -46,18 +46,16 @@ export function Club({ v }) {
 
           <div style={css`height:1px;background:#EDEDED;margin:16px 0;`}></div>
           <div onClick={v.goEarnPoints} style={css`display:flex;align-items:center;gap:16px;cursor:pointer;`}>
-            <div style={css`flex:1;min-width:0;`}>
-              <div style={css`display:flex;align-items:center;gap:8px;`}>
-                <span style={css`font-size:18px;font-weight:900;`}>Yearly Category Progress</span>
-                <span style={css`font-size:11px;font-weight:800;color:${v.yearlyCatText};background:${v.yearlyCatBg};border-radius:999px;padding:3px 9px;flex:none;`}>{v.yearlyCatLabel}</span>
-              </div>
-              <div style={css`display:flex;justify-content:space-between;gap:7px;margin-top:16px;`}>
-                {v.yearlyCatIcons.map((c, i) => (
-                  <div key={i} style={css`width:24px;height:24px;border-radius:6px;background:${c.iconTint};display:flex;align-items:center;justify-content:center;flex:none;`}>{c.iconElSmall}</div>
-                ))}
-              </div>
+            <div style={css`flex:1;min-width:0;display:flex;align-items:center;gap:8px;`}>
+              <span style={css`font-size:18px;font-weight:900;`}>Category Progress</span>
+              <span style={css`font-size:11px;font-weight:800;color:${v.yearlyCatText};background:${v.yearlyCatBg};border-radius:999px;padding:3px 9px;flex:none;`}>{v.yearlyCatLabel}</span>
             </div>
             <svg width="18" height="18" style={css`color:#5F6261;flex:none;`}><use href="#ic-chev" /></svg>
+          </div>
+          <div style={css`display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:16px;justify-items:center;`}>
+            {v.yearlyCatIcons.map((c, i) => (
+              <div key={i} onClick={(e) => { v.stop(e); c.open(); }} style={css`width:47px;height:47px;border-radius:13px;background:${c.iconTint};display:flex;align-items:center;justify-content:center;cursor:pointer;`}>{c.iconElBig}</div>
+            ))}
           </div>
         </div>
       </div>
