@@ -47,7 +47,7 @@ export function Club({ v }) {
           <div style={css`height:1px;background:#EDEDED;margin:16px 0;`}></div>
           <div onClick={v.goEarnPoints} style={css`display:flex;align-items:center;gap:16px;cursor:pointer;`}>
             <div style={css`flex:1;min-width:0;display:flex;align-items:center;gap:8px;`}>
-              <span style={css`font-size:18px;font-weight:900;`}>Category Progress</span>
+              <span style={css`font-size:18px;font-weight:900;`}>Yearly category progress</span>
               <span style={css`font-size:11px;font-weight:800;color:${v.yearlyCatText};background:${v.yearlyCatBg};border-radius:999px;padding:3px 9px;flex:none;`}>{v.yearlyCatLabel}</span>
             </div>
             <svg width="18" height="18" style={css`color:#5F6261;flex:none;`}><use href="#ic-chev" /></svg>
