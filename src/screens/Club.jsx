@@ -36,7 +36,7 @@ export function Club({ v }) {
             {v.monthsGrid.map((mg, i) => (
               <div key={i} onClick={mg.open} style={css`display:flex;flex-direction:column;align-items:center;gap:5px;cursor:${mg.cursor};`}>
                 <div data-herd-idx={mg.idx} style={css`position:relative;width:100%;aspect-ratio:1;border-radius:13px;background:${mg.bg};border:${mg.border};box-sizing:border-box;display:flex;align-items:center;justify-content:center;`}>
-                  {mg.isCow && (<><img src="assets/flash-cow.svg" alt="" style={css`width:28px;height:28px;opacity:${mg.op};`} /></>)}
+                  {mg.isCow && (<><img src="assets/flash-cow.svg" alt="" style={css`width:28px;height:28px;opacity:${mg.op};filter:${mg.filter};`} /></>)}
                   {mg.isBreak && (<><div style={css`display:flex;gap:3px;align-items:center;`}><span style={css`width:3px;height:13px;border-radius:2px;background:#C4C4C4;`}></span><span style={css`width:3px;height:13px;border-radius:2px;background:#C4C4C4;`}></span></div></>)}
                 </div>
                 <span style={css`font-size:10px;font-weight:800;color:${mg.labelCol};`}>{mg.label}</span>
@@ -45,19 +45,19 @@ export function Club({ v }) {
           </div>
 
           <div style={css`height:1px;background:#EDEDED;margin:16px 0;`}></div>
-          <div onClick={v.goEarnPoints} style={css`display:flex;align-items:center;gap:16px;cursor:pointer;`}>
-            <div style={css`flex:1;min-width:0;`}>
-              <div style={css`display:flex;align-items:center;gap:8px;`}>
-                <span style={css`font-size:18px;font-weight:900;`}>Yearly Category Progress</span>
-                <span style={css`font-size:11px;font-weight:800;color:${v.yearlyCatText};background:${v.yearlyCatBg};border-radius:999px;padding:3px 9px;flex:none;`}>{v.yearlyCatLabel}</span>
-              </div>
-              <div style={css`display:flex;justify-content:space-between;gap:7px;margin-top:16px;`}>
-                {v.yearlyCatIcons.map((c, i) => (
-                  <div key={i} style={css`width:24px;height:24px;border-radius:6px;background:${c.iconTint};display:flex;align-items:center;justify-content:center;flex:none;`}>{c.iconElSmall}</div>
+          <div onClick={v.goEarnPoints} style={css`cursor:pointer;`}>
+            <div style={css`display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:12px;`}>
+              <div style={css`font-size:15px;font-weight:900;`}>Categories Earned</div>
+              <div style={css`font-size:11px;color:${v.yearlyCatText};font-weight:800;background:${v.yearlyCatBg};border-radius:999px;padding:3px 9px;flex:none;`}>{v.yearlyCatLabel}</div>
+            </div>
+            <div style={css`display:flex;align-items:center;justify-content:space-between;gap:12px;`}>
+              <div style={css`flex:1;min-width:0;display:grid;grid-template-columns:repeat(4,1fr);gap:8px;`}>
+                {v.catsEarnedGrid.map((c, i) => (
+                  <div key={i} style={css`width:100%;aspect-ratio:4/3;border-radius:16px;background:${c.chipBg};display:flex;align-items:center;justify-content:center;`}>{c.iconEl}</div>
                 ))}
               </div>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" style={css`color:#B4B4B4;flex:none;`}><path d="M9 6l6 6-6 6" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" /></svg>
             </div>
-            <svg width="18" height="18" style={css`color:#5F6261;flex:none;`}><use href="#ic-chev" /></svg>
           </div>
         </div>
       </div>

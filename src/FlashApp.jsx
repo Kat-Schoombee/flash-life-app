@@ -1081,12 +1081,19 @@ class FlashApp extends React.Component {
     // Pill is a tinted chip: light rgba background with a matching solid-colour label.
     const yearlyCatCount = cats.filter(c => c.yearlyDone).length;
     const yearlyCatLabel = yearlyCatCount + '/' + cats.length;
-    const yearlyCatBg = yearlyCatCount >= 8 ? 'rgba(16,197,4,0.12)' : (yearlyCatCount >= 5 ? 'rgba(255,149,0,0.12)' : 'rgba(243,48,81,0.12)');
-    const yearlyCatText = yearlyCatCount >= 8 ? '#0C8B43' : (yearlyCatCount >= 5 ? '#B4690C' : '#C41F3D');
+    const yearlyCatBg = 'rgba(16,197,4,0.12)';
+    const yearlyCatText = '#0C8B43';
+    // Categories Earned grid — chip per category, earned = brand tint + full-colour icon,
+    // unearned = flat #F4F4F4 tile with the unified muted icon (renderCatIcon's mask treatment).
+    const catsEarnedGrid = cats.map(c => ({
+      id: c.id,
+      chipBg: c.yearlyDone ? c.tint : '#F4F4F4',
+      iconEl: this.renderCatIcon(c.iconSrc, 28, c.yearlyDone),
+    }));
     const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
     const curMonth = 6; // July — the live/current month
     const BREAK = 9;    // October — cycle break, no cow
-    const GRAD = '#1DFA0F';
+    const GRAD = 'linear-gradient(135deg,#0C9A3C 0%,#24E80F 100%)';
 
     // ===== Flash Club business rules — one coherent scenario per leave state =====
     // Members of six months or more get ONE grace month: a missed monthly target is
@@ -1122,7 +1129,7 @@ class FlashApp extends React.Component {
 
     const monthsGrid = MONTHS.map((m,i) => {
       if (i === BREAK) // October — cycle break, no cow earned
-        return { label:m, bg:'#F4F4F4', border:'1.5px dashed #D0D0D0', op:'1', labelCol:'#A4A4A4', isCow:false, isBreak:true, missed:false, current:false, cursor:'default', open:()=>{} };
+        return { label:m, bg:'#F4F4F4', border:'1.5px dashed #D0D0D0', op:'1', filter:'none', labelCol:'#A4A4A4', isCow:false, isBreak:true, missed:false, current:false, cursor:'default', open:()=>{} };
       const open = () => this.openMonthSheet(i);
       const preMember = scen.joinIdx >= 0 && i < scen.joinIdx;
       let st;
@@ -1132,12 +1139,12 @@ class FlashApp extends React.Component {
       else if (i === scen.graceIdx) st = 'grace';
       else if (scen.hardMiss.includes(i)) st = 'missed';
       else st = 'upcoming';
-      if (st === 'earned')  return { label:m, bg:GRAD,      border:'none',                 op:'1',    labelCol:'#252525', isCow:true,  isBreak:false, missed:false, current:false, cursor:'pointer', open };
-      if (st === 'current') return { label:m, bg:'#FFFFFF',  border:'2px dashed #10C504',   op:'0.3',  labelCol:'#10C504', isCow:true,  isBreak:false, missed:false, current:true,  cursor:'pointer', open };
-      if (st === 'grace')   return { label:m, bg:'#FEEFD2',  border:'1.5px dashed #E0A12B', op:'0.5',  labelCol:'#C77E12', isCow:true,  isBreak:false, missed:false, current:false, cursor:'pointer', open };
-      if (st === 'missed')  return { label:m, bg:'#FCE5EA',  border:'1px solid #D80027',    op:'0.28', labelCol:'#D80027', isCow:true,  isBreak:false, missed:true,  current:false, cursor:'pointer', open };
-      if (st === 'pre')     return { label:m, bg:'#F4F4F4',  border:'none',                 op:'0',    labelCol:'#C4C4C4', isCow:false, isBreak:false, missed:false, current:false, cursor:'pointer', open };
-      return                       { label:m, bg:'#F4F4F4',  border:'none',                 op:'0.2',  labelCol:'#A4A4A4', isCow:true,  isBreak:false, missed:false, current:false, cursor:'pointer', open };
+      if (st === 'earned')  return { label:m, bg:GRAD,      border:'none',                 op:'1',    filter:'none',        labelCol:'#252525', isCow:true,  isBreak:false, missed:false, current:false, cursor:'pointer', open };
+      if (st === 'current') return { label:m, bg:'#FFFFFF',  border:'2px dashed #10C504',   op:'0.3',  filter:'none',        labelCol:'#10C504', isCow:true,  isBreak:false, missed:false, current:true,  cursor:'pointer', open };
+      if (st === 'grace')   return { label:m, bg:'#FEEFD2',  border:'1.5px dashed #E0A12B', op:'0.5',  filter:'none',        labelCol:'#C77E12', isCow:true,  isBreak:false, missed:false, current:false, cursor:'pointer', open };
+      if (st === 'missed')  return { label:m, bg:'#FCE5EA',  border:'1px solid #D80027',    op:'0.28', filter:'none',        labelCol:'#D80027', isCow:true,  isBreak:false, missed:true,  current:false, cursor:'pointer', open };
+      if (st === 'pre')     return { label:m, bg:'#F4F4F4',  border:'none',                 op:'0',    filter:'none',        labelCol:'#C4C4C4', isCow:false, isBreak:false, missed:false, current:false, cursor:'pointer', open };
+      return                       { label:m, bg:'#F4F4F4',  border:'none',                 op:'0.28', filter:'grayscale(1)', labelCol:'#A4A4A4', isCow:true,  isBreak:false, missed:false, current:false, cursor:'pointer', open };
     });
     monthsGrid.forEach((mg, i) => { mg.idx = i; });
     const GOAL = scen.goalCows;
@@ -1523,7 +1530,7 @@ class FlashApp extends React.Component {
       // club
       cats10, cats5, herd, yearCows,
       earnPointsSub: toGo > 0 ? ('You are ' + toGo + (toGo === 1 ? ' point' : ' points') + ' away from earning July’s cow') : 'You’ve earned July’s cow! 🎉',
-      yearlyCatIcons: cats, yearlyCatLabel, yearlyCatBg, yearlyCatText,
+      yearlyCatIcons: cats, yearlyCatLabel, yearlyCatBg, yearlyCatText, catsEarnedGrid,
       goEarnPoints: () => this.setState({ clubTab:'earn' }),
       // category
       // catYearlyDone: has this category EVER been earned this yearly cycle (sticky —
