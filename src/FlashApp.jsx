@@ -1066,6 +1066,7 @@ class FlashApp extends React.Component {
         id:c.id, name:c.name, pts:c.pts, iconSrc:c.iconSrc,
         iconEl: this.renderCatIcon(c.iconSrc, 24, yearlyDone),
         iconElSmall: this.renderCatIcon(c.iconSrc, 14, yearlyDone),
+        iconElBig: this.renderCatIcon(c.iconSrc, 28, yearlyDone),
         iconTint: yearlyDone ? c.tint : '#F0F0F0',
         done: !!done[c.id], yearlyDone,
         statusLabel: yearlyDone ? 'Category earned' : 'Not earned yet',
@@ -1699,42 +1700,36 @@ class FlashApp extends React.Component {
       <svg width={w} height={h || w} style={style}><use href={'#' + n} /></svg>
     );
     return (
-      <div style={css`min-height:100vh;display:flex;align-items:center;justify-content:center;padding:30px 0;`}>
+      <div style={css`min-height:100vh;min-height:100dvh;width:100%;display:flex;justify-content:center;background:#D8DEDC;`}>
         <Sprite />
 
-        {/* device bezel + screen navigator share a positioning context, so the navigator is
-            anchored to the device's own edge rather than the viewport corner — this guarantees
-            it can never sit on top of the device UI, regardless of window width. */}
-        <div style={css`position:relative;`}>
-
-          {/* ============ SCREEN NAVIGATOR (dev tool — sits outside the device, never over the UI) ============ */}
-          <div style={css`position:absolute;top:0;left:100%;margin-left:16px;z-index:999;font-family:'Satoshi',system-ui,sans-serif;`}>
-            <div onClick={v.toggleDev} style={css`display:flex;align-items:center;gap:7px;height:34px;padding:0 13px;border-radius:999px;background:#0a0a0a;color:#fff;font-size:12px;font-weight:800;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.25);user-select:none;white-space:nowrap;`}>
-              <span style={css`width:7px;height:7px;border-radius:999px;background:#1DFA0F;flex:none;`}></span>Screens
-            </div>
-            {v.devOpen && (
-              <div style={css`margin-top:8px;width:212px;background:#1a1a1d;border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:13px;box-shadow:0 18px 50px rgba(0,0,0,.4);max-height:80vh;overflow-y:auto;`}>
-                <div style={css`font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#7a7a80;margin:2px 4px 8px;`}>Auth flow</div>
-                <div style={css`display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px;`}>
-                  {v.devAuth.map((d, i) => (
-                    <div key={i} onClick={d.go} style={css`padding:7px 11px;border-radius:9px;background:${d.bg};color:${d.col};font-size:12px;font-weight:700;cursor:pointer;`}>{d.label}</div>
-                  ))}
-                </div>
-                <div style={css`font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#7a7a80;margin:2px 4px 8px;`}>App</div>
-                <div style={css`display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px;`}>
-                  {v.devApp.map((d, i) => (
-                    <div key={i} onClick={d.go} style={css`padding:7px 11px;border-radius:9px;background:${d.bg};color:${d.col};font-size:12px;font-weight:700;cursor:pointer;`}>{d.label}</div>
-                  ))}
-                </div>
-                <div style={css`font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#7a7a80;margin:2px 4px 8px;`}>Flash Club simulation</div>
-                <div onClick={v.startNewMonth} style={css`padding:7px 11px;border-radius:9px;background:rgba(255,255,255,.07);color:#d4d4d8;font-size:12px;font-weight:700;cursor:pointer;display:inline-block;`}>Start new month</div>
-              </div>
-            )}
+        {/* ============ SCREEN NAVIGATOR (dev tool — fixed to the viewport corner, never over the app UI) ============ */}
+        <div style={css`position:fixed;top:16px;right:16px;z-index:999;font-family:'Satoshi',system-ui,sans-serif;`}>
+          <div onClick={v.toggleDev} style={css`display:flex;align-items:center;gap:7px;height:34px;padding:0 13px;border-radius:999px;background:#0a0a0a;color:#fff;font-size:12px;font-weight:800;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.25);user-select:none;white-space:nowrap;`}>
+            <span style={css`width:7px;height:7px;border-radius:999px;background:#1DFA0F;flex:none;`}></span>Screens
           </div>
+          {v.devOpen && (
+            <div style={css`margin-top:8px;width:212px;background:#1a1a1d;border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:13px;box-shadow:0 18px 50px rgba(0,0,0,.4);max-height:80vh;overflow-y:auto;`}>
+              <div style={css`font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#7a7a80;margin:2px 4px 8px;`}>Auth flow</div>
+              <div style={css`display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px;`}>
+                {v.devAuth.map((d, i) => (
+                  <div key={i} onClick={d.go} style={css`padding:7px 11px;border-radius:9px;background:${d.bg};color:${d.col};font-size:12px;font-weight:700;cursor:pointer;`}>{d.label}</div>
+                ))}
+              </div>
+              <div style={css`font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#7a7a80;margin:2px 4px 8px;`}>App</div>
+              <div style={css`display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px;`}>
+                {v.devApp.map((d, i) => (
+                  <div key={i} onClick={d.go} style={css`padding:7px 11px;border-radius:9px;background:${d.bg};color:${d.col};font-size:12px;font-weight:700;cursor:pointer;`}>{d.label}</div>
+                ))}
+              </div>
+              <div style={css`font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#7a7a80;margin:2px 4px 8px;`}>Flash Club simulation</div>
+              <div onClick={v.startNewMonth} style={css`padding:7px 11px;border-radius:9px;background:rgba(255,255,255,.07);color:#d4d4d8;font-size:12px;font-weight:700;cursor:pointer;display:inline-block;`}>Start new month</div>
+            </div>
+          )}
+        </div>
 
-          {/* device bezel */}
-          <div style={css`position:relative;width:392px;height:812px;background:#0a0a0a;border-radius:46px;padding:9px;box-shadow:0 30px 70px rgba(0,0,0,.35);`}>
-            <div id="fl-screen" style={css`position:relative;width:100%;height:100%;background:#EDEDED;border-radius:38px;overflow:hidden;display:flex;flex-direction:column;`}>
+        {/* app surface: fills the viewport on phones, becomes a centered responsive column on wider screens */}
+        <div id="fl-screen" style={css`position:relative;width:100%;max-width:600px;min-height:100vh;min-height:100dvh;background:#EDEDED;overflow:hidden;display:flex;flex-direction:column;`}>
 
             {/* app status bar */}
             <div style={css`position:relative;z-index:30;height:34px;flex:none;display:flex;align-items:center;justify-content:flex-end;gap:6px;padding:10px 22px 0;color:${v.statusColor};background:${v.statusBg};`}>
@@ -1965,9 +1960,6 @@ class FlashApp extends React.Component {
             </div>
 
           </div>
-        </div>
-
-        </div>
       </div>
     );
   }
