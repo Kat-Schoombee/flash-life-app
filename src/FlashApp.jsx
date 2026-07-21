@@ -1729,7 +1729,7 @@ class FlashApp extends React.Component {
         </div>
 
         {/* app surface: fills the viewport on phones, becomes a centered responsive column on wider screens */}
-        <div id="fl-screen" style={css`position:relative;width:100%;max-width:600px;min-height:100vh;min-height:100dvh;background:#EDEDED;overflow:hidden;display:flex;flex-direction:column;`}>
+        <div id="fl-screen" style={css`position:relative;width:100%;max-width:600px;height:100vh;height:100dvh;background:#EDEDED;overflow:hidden;display:flex;flex-direction:column;`}>
 
             {/* app status bar */}
             <div style={css`position:relative;z-index:30;height:34px;flex:none;display:flex;align-items:center;justify-content:flex-end;gap:6px;padding:10px 22px 0;color:${v.statusColor};background:${v.statusBg};`}>
